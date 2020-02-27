@@ -1,4 +1,4 @@
-# Continuous learning of typless AI
+# WIP: Continuous learning of typless AI
 AI is a living thing. It learns and makes mistakes. This guide will show you how to integrate continuous learning with typless AI without any overhead for you or your customers.
 
 ## Prerequisites
