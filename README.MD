@@ -1,6 +1,6 @@
 # Continuously learning AI
 AI is a living thing. It learns and makes mistakes.
-This guide will show you how to integrate continuous learning with __typless__ into the existing workflow of your customers.
+This guide will show you how to integrate continuously learning AI into the existing workflow of your customers.
 
 ## Why do you need continuously learning AI?
 Business processes vary from one company to another, even from one department to another inside the same company.
