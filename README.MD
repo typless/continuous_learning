@@ -191,7 +191,7 @@ After clicking Submit, you will land on the received invoice details page.
 But hey, invoice data fields are still empty! Didn't we just add data extraction?
 Of course, they are, __typless__ has never been learning from your data. Let's do it.
 
-## Continuously learn AI
+## Continuously learning AI
 __typless__ needs to learn to extract data.
 Similar to data extraction, we can add continuous learning into our process.
 Before we added __typless__, code looked like this:
