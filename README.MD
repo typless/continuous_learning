@@ -1,56 +1,85 @@
-# WIP: Continuous learning of typless AI
-AI is a living thing. It learns and makes mistakes. This guide will show you how to integrate continuous learning with typless AI without any overhead for you or your customers.
+# typless - the continuously learning AI
+AI is a living thing. It learns and makes mistakes.
+This guide will show you how to integrate continuous learning with typless AI into the existing workflow of your customers.
 
 ## Prerequisites
-To easily follow you should:
+To easily follow, we suggest that, before reading further, you do these following steps:
 1. Register at [__typless__](https://developers.typless.com)
-2. Login to [__typless__](https://developers.typless.com)
-3. Get API key in _Settings_ tab from [__typless__](https://developers.typless.com)
-4. Create new document type named example:
-    * Click on _Documents_ tab in side nav
-    * Click _+New_ button
-    * For _name_ set __example__, for _OCR language_ select __English__
-    * Click _Next_
-    * Leave fields as it is and click _Confirm_ 
+2. Log in
+3. Click the _Settings_ tab in the side nav bar to get API key
+4. Create a new document type named _example_:
+    * Click on the __Documents__ tab in the side nav
+    * Click on the __+New__ button
+    * For the _name_ set __example__
+    * For the _OCR language_ select __English__
+    * Click on the __Next__ button
+    * Leave fields as they are and click on the __Confirm__ button 
     
-5. You can clone code of example Django project from [__this__](https://github.com/typless/continuous_learning) Github repository.
+5. Get code of the example Django project from [__this__](https://github.com/typless/continuous_learning) Github repository.
     ```bash
     git clone https://github.com/typless/continuous_learning.git
     ```
-    
+    Set the API key:
+    ```bash
+    export API_KEY=YOUR_API_KEY_FROM_SETTINGS_TAB
+    ```
     To install requirements:
     ```bash
     pip install -r requirements.txt
     ```
-    To run development server:
+    To run the development server:
     ```bash
     python manage.py runserver
     ```
-    To see application, open [localhost:8000](http://localhost:8000).
-## Why do you need continuous learning?
+    To see the application, open [localhost:8000](http://localhost:8000).
+
+
+## Why do you need continuously learning AI?
 Business processes vary from one company to another, even from one department to another inside the same company.
-When you are on boarding a new supplier you need to add it into your ERP system.
-You need to define how to pay, when to pay, contact person, etc. So it is a process.
-Will you set the same process for all suppliers? Probably no.
-What you need is an AI that will rapidly adapt to changes in your system - you need __typless__ continuous learning.
+For example, when you are on-boarding a new supplier, you need to add it into your ERP system.
+You need to define how to pay, when to pay, contact person, etc. With all these parameters, you will set the process of business for it.
+Will, you set the same process for all suppliers? Probably no.
+Some of the suppliers will send you invoices daily, some weekly, some monthly.
+Some of them you will pay with a credit card, some of them with bank transfer, etc.
+Will every company has the same process for the same supplier? Probably no.
+Can it change once it's set? Of course!
 
-## Keep workflow the same
-Lets say we, Awesome company Inc., track our expenses with simple application which allows us to:
+The question is: __How to integrate data extraction to fit those prerequisites?__
 
-* see list of our suppliers
-* add new supplier
-* see list of received invoices
-* add new received invoice
-* see details of selected received invoice
-* confirmed received invoice
+Firstly, you need an __AI__ that will __learn directly from your system__.
+You don't want to add new steps into existing process, right?
 
-Although we are Awesome company, we are still lazy. So we decided to automate our data entry from received invoices.
-We want to keep our process the same, we just want to eliminate key strokes. So what to to?
-To do that, we need some kind of data extraction service - here comes __typless__. So how to integrate it to meet our needs?
+Secondly, you need __continuously learning__ AI.
+You want it to __reflect changes__ in your system as __fast__ as possible, right?
+
+Thirdly, you need an AI that speaks your language. Your supplier A has an ID 1234 in your database.
+It would be nice if AI would tell you: "It is invoice from supplier 1234.", right?
+It would eliminate OCR errors and at least one database query.
+
+All of that can be achieved with __typless__ - the continuously learning AI for data extraction.
+
+Let us take a look at the example.
+
+## Expenses tracking
+Let's say we, Awesome company Inc., track our expenses with a simple application which allows us to:
+
+* see the list of our suppliers
+* add a new supplier
+* see the list of received invoices
+* add a new received invoice
+* see details of the selected received invoice
+* confirm the received invoice
+
+Although we are an Awesome company, we are still lazy.
+So we've decided to automate our data entry from received invoices.
+We want to keep our process the same, but we want to eliminate keystrokes.
+So what to do?
+We need a data extraction service. We've searched the web and decided to go with __typless__.
+So how to integrate it to meet the needs mentioned above?
 
 ## Integrate into existing workflow
-If we want to ingerate like this we need to only add typless, without changing existing code.
-Before we added typless, our views looked like this:
+We don't want to change our existing process. Nonetheless, we don't want to mess our code too much.
+Before we added data extraction, our code in views looked like this:
 ```python
 # expenses/views.py
 # ... other code ...
@@ -78,9 +107,11 @@ def received_invoices_view(request):
  # ... other code
 
 ```
-Nothing special. When we added new received invoice file, we created new ReceivedInvoice instance by calling ```form.save()```.
-Then user was redirected to details page to enter missing data and confirm invoice. Therefore we added typless integration for data extraction after: ```form.save()```.
-Code will now look like this: 
+Nothing special.
+When we added a newly received invoice file, we created a new ReceivedInvoice instance by calling ```form.save()```.
+Then user was redirected to the details page to enter missing data and confirm the invoice.
+Therefore we've decided to added __typless__ data extraction request after ```form.save()```.
+Code now looks like this:
 
 ```python
 # expenses/views.py
@@ -136,29 +167,35 @@ def received_invoices_view(request):
  # ... other code
 
 ```
-We added call to typless endpoint for data extraction. After response is returned, we update ReceivedInvoice instance with extracted data.
+We've added a single API call in which we uploaded the invoice file and selected the document type.
+(We've created document type named __example__ following steps at the beginning of this guide.)
+After the response is returned, the ReceivedInvoice instance is updated with extracted data.
 
-## Test extraction
-If you haven't already, run the development server:
+## Test data extraction
+If you haven't already run the development server:
 ```bash
     python manage.py runserver
 ```
 and visit [localhost:8000](http://localhost:8000).
 
 There are no suppliers yet. So add two of them:
-* __CircleCI__ with __Bank transfer__ as payment method
-* __ScaleGrid__ with __Credit Card__ as payment method
+* __CircleCI__ with __bank transfer__ as the payment method
+* __ScaleGrid__ with __credit card__ as the payment method
 
-You will find example invoices in folder __examples__.
-Click on __Received invoices__ link in navbar. Add one of example invoices with form and click __Submit__.
+You will find example invoices in the folder named __examples__.
+Click on __Received invoices__ link in the navigation bar.
+Choose file __circleci1.pdf__ and click __Submit__.
 
-After clicking Submit, you will land on received invoice details page.
+After clicking Submit, you will land on the received invoice details page.
 
-But hey, when you try it invoice data are still empty!
-Of course they are, we did not learn typless yet.
+But hey, invoice data are still empty! Didn't we just add data extraction?
+Of course, they are, we did not learn __typless__ yet. Let's do it.
 
-## Use continuous learning
-So we need to learn typless. Now here we come to the nice part. Similar as we added data extraction, we can add continuous learning into our process. Before we added typless code looked like this:
+## Continuously learn AI
+We need to learn __typless__.
+Now here we come to the beautiful part.
+Similar to data extraction, we can add continuous learning into our process.
+Before we added __typless__, code looked like this:
 ```python
 # expenses/views.py
 # ... other code ...
@@ -183,7 +220,10 @@ def received_invoice_details(request, pk):
     return render(request, 'expenses/received_invoice_details.html', context)
 
 ```
-Instance was just updated with data from request. To learn typless we need to add request to typless REST API with confirmed data.
+Instance was just updated with the data from the request.
+As for data extraction, to continuously learn AI, we need a single REST API call.
+We've decided to insert it after instance update.
+Code now looks like this:
 ```python
 # expenses/views.py
 # ... other code ...
@@ -223,28 +263,38 @@ def received_invoice_details(request, pk):
         return HttpResponseNotAllowed(['GET', 'POST'])
 
     return render(request, 'expenses/received_invoice_details.html', context)
-
 ```
 
-Now, after we update our ReceivedInvoice instance, we learn typless with confirmed values.
+If we take a look we can see:
+* we have added single API call
+* we used data from our instance which is saved in the database
 
 ## Confirm values and test extraction again
-Now enter missing data into form at received invoice details page and click __Confirm__.
-Return to received invoices list by clicking on navbar link __Received invoices__. Now add another invoice from the same supplier as in previous step.
+Now enter missing data into the form at received invoice details page and click the __Confirm__ button.
+Return to received invoices list by clicking on link __Received invoices__ in the navigation bar.
+Choose file __circleci2.pdf__ and click on the __Submit__ button.
 
 You should see that extracted data are __full__ and __correct__.
+Why is that? Because __typless__ have learned from you.
 
-You can try the same flow with second supplier from example invoices.
+You can try the same flow with scalegrid1.pdf and scalegrid2.pdf from example invoices.
+You can even use your invoices.
 
-## To sum up
-We have learned how to integrate typless into exsiting workflow with continuous learning.
+## Conclusion
+We have learned how to integrate __typless__, the continuous learning AI, into the existing workflow.
 
-To do that you need to integrate following steps:
+What we've achieved:
+* workflow stays the same
+* __typless__ is learning from values in our database
+* We have eliminated manual data entry
+* We have learned __typless__ to return the ID of supplier for a direct database update
 
-* Request on data extraction endpoint when user adds new PDF invoice
+To do that you need to integrate the following steps:
+
+* Request on data extraction endpoint when the user adds new PDF invoice
     * Save extracted data
     * Save __object_id__ from response
-* Request on learning endpoint when user confirms data
+* Request on learning endpoint when the user confirms data
     * Use __object_id__ from data extraction
     
  That's all! Happy OCRing!
