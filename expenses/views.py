@@ -89,25 +89,24 @@ def received_invoice_details(request, pk):
         if form.is_valid():
             invoice = form.save()
             # ###### Start typless learning######
-            if invoice.confirmed:
-                request_data = {
-                    "document_type_name": 'example',
-                    "customer": 'myself',
-                    "learning_fields": [
-                        '{"name": "supplier", "value": "%s"}' %invoice.supplier.id,
-                        '{"name": "invoice_number", "value": "%s"}' % invoice.invoice_number,
-                        '{"name": "issue_date", "value": "%s"}' % invoice.issue_date.strftime('%Y-%m-%d'),
-                        '{"name": "total_amount", "value": "%.2f"}' % invoice.total_amount
-                    ],
-                }
-                if os.getenv("API_KEY") is None:
-                    raise Exception('YOU MUST SET API KEY TO ENVIRONMENT!')
-                requests.post(
-                    "https://developers.typless.com/api/document-types/learn/",
-                    data=request_data,
-                    files={"document_object_id": (None, invoice.typless_id)},
-                    headers={'Authorization': f'Token {os.getenv("API_KEY")}'}
-                )
+            request_data = {
+                "document_type_name": 'example',
+                "customer": 'myself',
+                "learning_fields": [
+                    '{"name": "supplier", "value": "%s"}' %invoice.supplier.id,
+                    '{"name": "invoice_number", "value": "%s"}' % invoice.invoice_number,
+                    '{"name": "issue_date", "value": "%s"}' % invoice.issue_date.strftime('%Y-%m-%d'),
+                    '{"name": "total_amount", "value": "%.2f"}' % invoice.total_amount
+                ],
+            }
+            if os.getenv("API_KEY") is None:
+                raise Exception('YOU MUST SET API KEY TO ENVIRONMENT!')
+            requests.post(
+                "https://developers.typless.com/api/document-types/learn/",
+                data=request_data,
+                files={"document_object_id": (None, invoice.typless_id)},
+                headers={'Authorization': f'Token {os.getenv("API_KEY")}'}
+            )
             # ###### Finish typless ######
             context = {'invoice': invoice, 'form': ReceivedInvoiceForm(instance=invoice)}
         else:
