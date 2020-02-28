@@ -33,9 +33,9 @@ Let's take a look at the example.
 To easily follow, we suggest that, before reading further, you do these following steps:
 1. Register at [__typless__](https://developers.typless.com)
 2. Log in
-3. Click the _Settings_ tab in the side nav bar to get API key
+3. Click the _Settings_ tab in the side navigation bar to get API key
 4. Create a new document type named _example_:
-    * Click on the __Documents__ tab in the side nav
+    * Click on the __Documents__ tab in the side navigation bar
     * Click on the __+New__ button
     * For the _name_ set "__example__"
     * For the _OCR language_ select "__English__"
