@@ -28,7 +28,6 @@ class ReceivedInvoice(models.Model):
     invoice_number = models.CharField('Invoice number', max_length=80, null=True, blank=True)
     issue_date = models.DateField('Issue date', default=timezone.now, null=True, blank=True)
     total_amount = models.DecimalField(decimal_places=2, max_digits=8, null=True)
-    confirmed = models.BooleanField(default=False)
     typless_id = models.CharField(max_length=32, null=True)
 
     def __str__(self):

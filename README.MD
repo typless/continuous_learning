@@ -1,6 +1,33 @@
-# typless - the continuously learning AI
+# Continuously learning AI
 AI is a living thing. It learns and makes mistakes.
-This guide will show you how to integrate continuous learning with typless AI into the existing workflow of your customers.
+This guide will show you how to integrate continuous learning with __typless__ into the existing workflow of your customers.
+
+## Why do you need continuously learning AI?
+Business processes vary from one company to another, even from one department to another inside the same company.
+For example, when you are on-boarding a new supplier, you need to add it into your ERP system.
+You need to define how to pay, when to pay, contact person, etc.
+With all these parameters, you will set the process of business for it.
+Will, you set the same process for all suppliers? Probably not.
+Some of the suppliers will send you invoices daily, some weekly, some monthly.
+Some invoices are paid with a credit card, others with bank transfer, etc.
+Will every company have the same process for the same supplier? Probably not.
+Can it change once it's set? Of course!
+
+So the question is: __How to integrate data extraction to fit those prerequisites?__
+
+Firstly, you need a solution that will __learn directly from your system__.
+You don't want to add new steps into existing process.
+
+Secondly, you need __continuously learning__ AI.
+You want it to __reflect changes__ in your system as __fast__ as possible
+
+Lastly, you need an service that speaks your language. Your supplier A has an ID 1234 in your database.
+It would be nice if AI would tell you: "It is invoice from supplier 1234.".
+It would eliminate OCR errors and at least one database query.
+
+All of that can be achieved with __typless__ - the continuously learning AI for data extraction.
+
+Let's take a look at the example.
 
 ## Prerequisites
 To easily follow, we suggest that, before reading further, you do these following steps:
@@ -32,33 +59,6 @@ To easily follow, we suggest that, before reading further, you do these followin
     python manage.py runserver
     ```
     To see the application, open [localhost:8000](http://localhost:8000).
-
-
-## Why do you need continuously learning AI?
-Business processes vary from one company to another, even from one department to another inside the same company.
-For example, when you are on-boarding a new supplier, you need to add it into your ERP system.
-You need to define how to pay, when to pay, contact person, etc. With all these parameters, you will set the process of business for it.
-Will, you set the same process for all suppliers? Probably no.
-Some of the suppliers will send you invoices daily, some weekly, some monthly.
-Some of them you will pay with a credit card, some of them with bank transfer, etc.
-Will every company has the same process for the same supplier? Probably no.
-Can it change once it's set? Of course!
-
-The question is: __How to integrate data extraction to fit those prerequisites?__
-
-Firstly, you need an __AI__ that will __learn directly from your system__.
-You don't want to add new steps into existing process, right?
-
-Secondly, you need __continuously learning__ AI.
-You want it to __reflect changes__ in your system as __fast__ as possible, right?
-
-Thirdly, you need an AI that speaks your language. Your supplier A has an ID 1234 in your database.
-It would be nice if AI would tell you: "It is invoice from supplier 1234.", right?
-It would eliminate OCR errors and at least one database query.
-
-All of that can be achieved with __typless__ - the continuously learning AI for data extraction.
-
-Let us take a look at the example.
 
 ## Expenses tracking
 Let's say we, Awesome company Inc., track our expenses with a simple application which allows us to:
@@ -188,12 +188,11 @@ Choose file __circleci1.pdf__ and click __Submit__.
 
 After clicking Submit, you will land on the received invoice details page.
 
-But hey, invoice data are still empty! Didn't we just add data extraction?
-Of course, they are, we did not learn __typless__ yet. Let's do it.
+But hey, invoice data fields are still empty! Didn't we just add data extraction?
+Of course, they are, __typless__ has never been learning from your data. Let's do it.
 
 ## Continuously learn AI
-We need to learn __typless__.
-Now here we come to the beautiful part.
+__typless__ needs to learn to extract data.
 Similar to data extraction, we can add continuous learning into our process.
 Before we added __typless__, code looked like this:
 ```python
@@ -237,7 +236,7 @@ def received_invoice_details(request, pk):
         form = ReceivedInvoiceForm(request.POST, instance=invoice)
         if form.is_valid():
             invoice = form.save()
-            # ###### Learn typless ######
+            # ###### Start typless learning######
             if invoice.confirmed:
                 request_data = {
                     "document_type_name": 'example',
@@ -255,7 +254,7 @@ def received_invoice_details(request, pk):
                     files={"document_object_id": (None, invoice.typless_id)},
                     headers={'Authorization': f'Token {os.getenv("API_KEY")}'}
                 )
-            # ###### Finish learning typless ######
+            # ###### Finish typless ######
             context = {'invoice': invoice, 'form': ReceivedInvoiceForm(instance=invoice)}
         else:
             context = {'invoice': invoice, 'form': form}
@@ -266,11 +265,11 @@ def received_invoice_details(request, pk):
 ```
 
 If we take a look we can see:
-* we have added single API call
+* we added single API call
 * we used data from our instance which is saved in the database
 
 ## Confirm values and test extraction again
-Now enter missing data into the form at received invoice details page and click the __Confirm__ button.
+Now enter missing data into the form at received invoice details page and click on the __Confirm__ button.
 Return to received invoices list by clicking on link __Received invoices__ in the navigation bar.
 Choose file __circleci2.pdf__ and click on the __Submit__ button.
 
@@ -287,7 +286,7 @@ What we've achieved:
 * workflow stays the same
 * __typless__ is learning from values in our database
 * We have eliminated manual data entry
-* We have learned __typless__ to return the ID of supplier for a direct database update
+* __typless__ has learned to return the ID of supplier for a direct database update
 
 To do that you need to integrate the following steps:
 

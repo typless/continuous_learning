@@ -46,6 +46,8 @@ def received_invoices_view(request):
                 "document_type_name": 'example',
                 "customer": 'test'
             }
+            if os.getenv("API_KEY") is None:
+                raise Exception('YOU MUST SET API KEY TO ENVIRONMENT!')
             response = requests.post(
                 f'https://developers.typless.com/api/document-types/extract-data/',
                 files=files,
@@ -86,7 +88,7 @@ def received_invoice_details(request, pk):
         form = ReceivedInvoiceForm(request.POST, instance=invoice)
         if form.is_valid():
             invoice = form.save()
-            # ###### Learn typless ######
+            # ###### Start typless learning######
             if invoice.confirmed:
                 request_data = {
                     "document_type_name": 'example',
@@ -98,13 +100,15 @@ def received_invoice_details(request, pk):
                         '{"name": "total_amount", "value": "%.2f"}' % invoice.total_amount
                     ],
                 }
+                if os.getenv("API_KEY") is None:
+                    raise Exception('YOU MUST SET API KEY TO ENVIRONMENT!')
                 requests.post(
                     "https://developers.typless.com/api/document-types/learn/",
                     data=request_data,
                     files={"document_object_id": (None, invoice.typless_id)},
                     headers={'Authorization': f'Token {os.getenv("API_KEY")}'}
                 )
-            # ###### Finish learning typless ######
+            # ###### Finish typless ######
             context = {'invoice': invoice, 'form': ReceivedInvoiceForm(instance=invoice)}
         else:
             context = {'invoice': invoice, 'form': form}
