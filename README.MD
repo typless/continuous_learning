@@ -220,7 +220,7 @@ def received_invoice_details(request, pk):
 
 ```
 Instance was just updated with the data from the request.
-As for data extraction, to continuously learn AI, we need a single REST API call.
+As for data extraction, continuously learning of AI, needs a single REST API call.
 We've decided to insert it after instance update.
 Code now looks like this:
 ```python
@@ -280,7 +280,7 @@ You can try the same flow with scalegrid1.pdf and scalegrid2.pdf from example in
 You can even use your invoices.
 
 ## Conclusion
-We have learned how to integrate __typless__, the continuous learning AI, into the existing workflow.
+We have learned how to integrate __typless__, the continuously learning AI, into the existing workflow.
 
 What we've achieved:
 * workflow stays the same
