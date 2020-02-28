@@ -16,13 +16,13 @@ Can it change once it's set? Of course!
 So the question is: __How to integrate data extraction to fit those prerequisites?__
 
 Firstly, you need a solution that will __learn directly from your system__.
-You don't want to add new steps into existing process.
+You don't want to add new steps to existing process.
 
-Secondly, you need __continuously learning__ AI.
+Secondly, you need __continuously learning AI__ .
 You want it to __reflect changes__ in your system as __fast__ as possible
 
-Lastly, you need an service that speaks your language. Your supplier A has an ID 1234 in your database.
-It would be nice if AI would tell you: "It is invoice from supplier 1234.".
+Lastly, you need a service that speaks your language. Your supplier A has an ID 1234 in your database.
+It would be nice if AI would tell you: "It is an invoice from supplier 1234.".
 It would eliminate OCR errors and at least one database query.
 
 All of that can be achieved with __typless__ - the continuously learning AI for data extraction.
@@ -37,8 +37,8 @@ To easily follow, we suggest that, before reading further, you do these followin
 4. Create a new document type named _example_:
     * Click on the __Documents__ tab in the side nav
     * Click on the __+New__ button
-    * For the _name_ set __example__
-    * For the _OCR language_ select __English__
+    * For the _name_ set "__example__"
+    * For the _OCR language_ select "__English__"
     * Click on the __Next__ button
     * Leave fields as they are and click on the __Confirm__ button 
     
@@ -168,7 +168,7 @@ def received_invoices_view(request):
 
 ```
 We've added a single API call in which we uploaded the invoice file and selected the document type.
-(We've created document type named __example__ following steps at the beginning of this guide.)
+(We've created a document type named __example__ following steps at the beginning of this guide.)
 After the response is returned, the ReceivedInvoice instance is updated with extracted data.
 
 ## Test data extraction
@@ -180,7 +180,7 @@ and visit [localhost:8000](http://localhost:8000).
 
 There are no suppliers yet. So add two of them:
 * __CircleCI__ with __bank transfer__ as the payment method
-* __ScaleGrid__ with __credit card__ as the payment method
+* __ScaleGrid__ with a __credit card__ as the payment method
 
 You will find example invoices in the folder named __examples__.
 Click on __Received invoices__ link in the navigation bar.
@@ -290,9 +290,9 @@ What we've achieved:
 
 To do that you need to integrate the following steps:
 
-* Request on data extraction endpoint when the user adds new PDF invoice
+* Request on data extraction endpoint when the user adds a new PDF invoice
     * Save extracted data
-    * Save __object_id__ from response
+    * Save __object_id__ from the response
 * Request on learning endpoint when the user confirms data
     * Use __object_id__ from data extraction
     
