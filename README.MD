@@ -13,7 +13,7 @@ Some invoices are paid with a credit card, others with bank transfer, etc.
 Will every company have the same process for the same supplier? Probably not.
 Can it change once it's set? Of course!
 
-So the question is: __How to integrate data extraction to fit those prerequisites?__
+## How to integrate data extraction to fit those prerequisites?
 
 Firstly, you need a solution that will __learn directly from your system__.
 You don't want to add new steps to existing process.
